@@ -1,0 +1,290 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>GitLab at Aspera - Chulki Lee</title>
+
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/black.css">
+
+  <!-- Theme used for syntax highlighting of code -->
+  <link rel="stylesheet" href="lib/css/zenburn.css">
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <h1>GitLab @ Aspera</h1>
+        <p>Chulki Lee</p>
+        <p>
+          2018-06-26
+          <br />
+          <a href="https://www.meetup.com/DevOps-on-GitLab-%EC%84%9C%EC%9A%B8-Meetup/events/251171689/">DevOps on GitLab 첫번째 meetup</a>
+        </p>
+        <p>
+          <small>
+            Disclaimer: The views and opinions expressed in this presentation are those of me and do not necessarily represent official
+            policy or position of my employer.
+          </small>
+        </p>
+      </section>
+      <section>
+        <h2>Agenda</h2>
+        <ul>
+          <li>About Me &amp; Aspera</li>
+          <li>History & Numbers</li>
+          <li>Running GitLab</li>
+          <li>GitLab Features</li>
+          <li>Q&amp;A</li>
+        </ul>
+      </section>
+      <section>
+        <section>
+          <h2>About Me</h2>
+          <p>
+            Senior software engineer
+            <br /> at
+            <a href="https://asperasoft.com/">Aspera, an IBM company</a>
+            <br /> leading
+            <em>Business Support System</em> (BSS) team
+          </p>
+          <p class="fragment">
+            ..and working on DevOps
+          </p>
+        </section>
+        <section>
+          <ul>
+            <li>github:
+              <a href="https://github.com/chulkilee">@chulkilee</a>
+            </li>
+            <li>linkedin:
+              <a href="https://www.linkedin.com/in/chulkilee/">chulkilee</a>
+            </li>
+            <li>email: chulki@us.ibm.com / chulki.lee@gmail.com</li>
+          </ul>
+        </section>
+      </section>
+      <section>
+        <h3>Aspera, an IBM Company</h3>
+        <p>
+          <i>Moving the world's data at maximum speed</i>
+        </p>
+        <ul>
+          <li>
+            <a href="https://asperasoft.com/technology/transport/fasp/">FASP</a> technology
+          </li>
+          <li>Being used in high-volume data industries
+            <small>dominant in media &amp; entertainment</small>
+          </li>
+          <li>Various products for different needs
+            <small>server/client, mobile/desktop app, on-premise, SaaS</small>
+          </li>
+          <li>Multi-cloud
+            <small>Amazon, Azure, Google, IBM</small>
+          </li>
+          <li class="fragment" data-fragment-index="1">Headquartered in Emeryville, CA</li>
+          <li class="fragment" data-fragment-index="1">Acquired by IBM in 2013</li>
+        </ul>
+      </section>
+      <section>
+        <h2>History</h2>
+        <ul>
+          <li>2013-03: Installed GitLab 4.2</li>
+          <li>2013-09: Announced it as official</li>
+          <li>2014-10: Migrate MySQL &rarr; PostgreSQL</li>
+          <li>2015-08: Migrate Source &rarr; Omnibus</li>
+          <li>2018-05: Started using GitLab Runner for CD</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Numbers</h2>
+        <ul>
+          <li>~ 1800 projects (~ 400 forks)</li>
+          <li>~ 200 active users</li>
+          <li>~ 50 groups</li>
+          <li>~ 18k merge requests</li>
+          <li>~ 13k pipelines / 45k jobs</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Running GitLab</h2>
+        <ul>
+          <li>
+            Run GitLab Community Edition with
+            <a href="https://docs.gitlab.com/omnibus/">Omnibus</a>
+          </li>
+          <li>
+            Manage configuration with
+            <a href="https://www.ansible.com/">Ansible</a>
+          </li>
+          <li>
+            Test on vm with
+            <a href="https://www.vagrantup.com/">Vagrant</a>
+          </li>
+          <li>
+            Run GitLab Runner on
+            <a href="https://kubernetes.io/">Kubernetes</a>
+          </li>
+          <li>
+            Mirror changes from/to Subversion with
+            <a href="https://subgit.com/">SubGit</a>
+          </li>
+        </ul>
+        <p class="fragment">No single major outage</p>
+      </section>
+
+      <section>
+        <section>
+          <h3>GitLab Features</h3>
+        </section>
+        <section>
+          <h3>In use</h3>
+          <ul>
+            <li>Merge Request</li>
+            <li>
+              Pipeline
+              <br />
+              <small>
+                <ul>
+                  <li>GitLab Runenr</li>
+                  <li>Container Registry</li>
+                  <li>Environment / Deployment</li>
+                </ul>
+              </small>
+            </li>
+            <li>GitLab Pages</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Available but not widely used</h3>
+          <ul>
+            <li>
+              Wiki
+              <br />
+              <small>Confluence / in-repo docs</small>
+            </li>
+            <li>
+              Snippets
+              <br />
+              <small>no history/inline comment &rarr; use MR</small>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <h3>Not in use</h3>
+          <ul>
+            <li>Issues
+              <br />
+              <small>Jira</small>
+            </li>
+            <li>Subgroups</li>
+            <li>Mattermost
+              <br />
+              <small>Slack</small>
+            </li>
+            <li>AutoOps</li>
+          </ul>
+        </section>
+        <section>
+          <h3>
+            <s>Missing</s> Not yet</h3>
+          <ul>
+            <li>
+              Sentry &rarr; GitLab integration
+              <br />
+              <small>
+                <a href="https://github.com/getsentry/sentry/issues/5622">getsentry/sentry#5622: Feature Request: Support Gitlab repositories </a>
+              </small>
+            </li>
+            <li>
+              SSO with OpenID Connect
+              <br />
+              <small>
+                <a href="https://gitlab.com/gitlab-org/gitlab-ce/issues/23255">gitlab-org/gitlab-ce#23255: Add OpenID Connect OmniAuth Provider to GitLab Omnibus</a>
+              </small>
+            </li>
+            <li>
+              Container registry clean up
+              <br />
+              <small>
+                <a href="https://gitlab.com/gitlab-org/gitlab-ce/issues/25322">gitlab-org/gitlab-ce#25322: Create a mechanism to clean up old container image revisions</a>
+              </small>
+
+            </li>
+            <li>
+              Deployment scenarios
+              <br />
+              <small>canary deployment, trafik shift, ...</small>
+            </li>
+          </ul>
+        </section>
+      </section>
+      <section>
+        <h2>Other tools in use</h2>
+        <ul>
+          <li>
+            <a href="https://enterprise.github.com/home">GitHub Enterprise</a>
+          </li>
+          <li>
+            <a href="https://slack.com/">Slack</a>
+          </li>
+          <li>
+            <a href="https://www.atlassian.com/software/jira">Jira Software</a>
+          </li>
+          <li>
+            <a href="https://jenkins.io/">Jenkins</a>
+          </li>
+        </ul>
+        <ul class="fragment">
+          <li style="list-style: none">To be replaced</li>
+          <li>
+            <a href="https://subversion.apache.org/">Subversion</a>
+          </li>
+          <li>
+            <a href="https://trac.edgewall.org/ ">Trac</a>
+          </li>
+          <li>
+            <a href="https://www.reviewboard.org/ ">Review Board</a>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Q&amp;A</h2>
+      </section>
+    </div>
+  </div>
+
+  <script src="lib/js/head.min.js "></script>
+  <script src="js/reveal.js "></script>
+
+  <script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+      history: true,
+      slideNumber: true,
+      dependencies: [
+        { src: 'plugin/markdown/marked.js' },
+        { src: 'plugin/markdown/markdown.js' },
+        { src: 'plugin/notes/notes.js', async: true },
+        { src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+      ]
+    });
+  </script>
+</body>
+
+</html>
