@@ -1,0 +1,613 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Adopting Elixir - Chulki Lee - 2018-06 Seoul Elixir Meetup</title>
+
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/black.css">
+
+  <!-- Theme used for syntax highlighting of code -->
+  <link rel="stylesheet" href="lib/css/zenburn.css">
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <h1>Adopting Elixir</h1>
+        <p>
+          <a href="https://www.meetup.com/Seoul-Elixir-Meetup/events/250867116/">2018-06 Seoul Elixir Meetup</a>
+        </p>
+        <p>Chulki Lee</p>
+        <p>
+          <small>
+            Disclaimer: The views and opinions expressed in this presentation are those of me and do not necessarily represent official
+            policy or position of my employer.
+          </small>
+        </p>
+      </section>
+      <section>
+        <h2>Agenda</h2>
+        <ul>
+          <li>About me &amp; Background</li>
+          <li>Challenges</li>
+          <li>Choosing Elixir</li>
+          <li>Elixir from Ruby developer</li>
+          <li>Onboarding</li>
+          <li>More: deployment, umbrella project</li>
+          <li>Q &amp; A</li>
+        </ul>
+      </section>
+      <section>
+        <section>
+          <h2>About Me</h2>
+        </section>
+        <section>
+          <h3>South Korea &rarr; US</h3>
+          <ul>
+            <li>
+              Studied in South Korea and the U. S.
+              <br />
+              <small>C, Java, Python, ...</small>
+            </li>
+            <li>
+              Worked at several start ups in both countries
+              <br />
+              <small>Python, Ruby, MongoDB, ...</small>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <h3>Working with Ruby</h3>
+          <ul>
+            <li>Since Ruby 1.8 / Rails 1.2</li>
+            <li>Web: Rails, Sinatra</li>
+            <li>HTTP API: JSON, XML</li>
+            <li>
+              DevOps:
+              <a href="http://capistranorb.com/">Capistrano</a>,
+              <a href="https://www.chef.io/">Chef</a>
+            </li>
+            <li>...</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Current</h3>
+          <p>
+            Senior software engineer
+            <br /> at
+            <a href="https://asperasoft.com/">Aspera, an IBM company</a>
+            <br /> leading
+            <em>Business Support System</em> (BSS) team
+          </p>
+        </section>
+        <section>
+          <h3>For more</h3>
+          <ul>
+            <li>github:
+              <a href="https://github.com/chulkilee">@chulkilee</a>
+            </li>
+            <li>linkedin:
+              <a href="https://www.linkedin.com/in/chulkilee/">chulkilee</a>
+            </li>
+            <li>email: chulki@us.ibm.com / chulki.lee@gmail.com</li>
+          </ul>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h2>Background</h2>
+        </section>
+        <section>
+          <h3>Aspera</h3>
+          <p>
+            <i>Moving the world's data at maximum speed</i>
+          </p>
+          <ul>
+            <li>
+              <a href="https://asperasoft.com/technology/transport/fasp/">FASP</a> technology
+            </li>
+            <li>Being used in high-volume data industries
+              <small>dominant in media &amp; entertainment</small>
+            </li>
+            <li>Various products for different needs
+              <small>server/client, mobile/desktop app, on-premise, SaaS</small>
+            </li>
+            <li>Multi-cloud
+              <small>Amazon, Azure, Google, IBM</small>
+            </li>
+            <li class="fragment" data-fragment-index="1">Headquartered in Emeryville, CA</li>
+            <li class="fragment" data-fragment-index="1">Acquired by IBM in 2013</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Aspera BSS team</h3>
+          <ul>
+            <li>
+              Support business operations
+              <small>usage metering, billing, licensing</small>
+            </li>
+            <li>Develop and maintain ~ 20 services
+              <small>mostly internal</small>
+            </li>
+            <li>Integrate with 3rd party APIs
+              <small>JSON, XML, periodical poll/push, ...</small>
+            </li>
+            <li>Create APIs for internal integration</li>
+            <li>Own the whole cycle
+              <small>design, implement, deploy, operate, support...</small>
+            </li>
+            <li class="fragment">... as a small team of three</li>
+          </ul>
+          <p class="fragment">
+            <strong>Autonomous small team</strong>
+          </p>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h2>Challenges</h2>
+        </section>
+        <section>
+          <h2>Challenges</h2>
+          <ul>
+            <li class="fragment">
+              Working with 3rd-party APIs
+              <small>request rate limits, low concurrency, intermittent errors</small>
+            </li>
+            <li class="fragment">
+              Complicated data flow
+              <br />
+              <small>no source of truth, temporal dependencies</small>
+            </li>
+            <li class="fragment">
+              Frequent large changes
+              <br />
+              <small>
+                IBM acquision,
+                <a href="https://en.wikipedia.org/wiki/General_Data_Protection_Regulation">General Data Protection Regulation</a>, ...
+              </small>
+            </li>
+          </ul>
+          <p class="fragment">
+            <strong>
+              Readability, Flexibility, Testability
+            </strong>
+          </p>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h2>Choosing Elixir</h2>
+        </section>
+        <section>
+          <h3>Plan</h3>
+          <ul>
+            <li class="fragment">Write small services in different languages</li>
+            <li class="fragment">
+              Criteria
+              <ul>
+                <li>
+                  libraries
+                  <small>database, HTTP, JSON, XML</small>
+                </li>
+                <li>error handling</li>
+                <li>
+                  dev productivity
+                  <small>docs, editor</small>
+                </li>
+                <li>
+                  code organization and convention
+                  <small>cognitive load, idiomatic programming</small>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <h3>Tested (or considered)</h3>
+          <p>
+            <small>in alphabetical order</small>
+          </p>
+          <ul>
+            <li>
+              Elixir
+              <small>
+                <a href="https://github.com/phoenixframework/phoenix">Phoenix</a>,
+                <a href="https://github.com/elixir-plug/plug">Plug</a>
+              </small>
+
+            </li>
+            <li>
+              Go
+              <small>
+                <a href="https://github.com/gorilla/mux">gorilla/mux</a>
+              </small>
+            </li>
+            <li>
+              Node.js
+              <small>
+                <a href="https://expressjs.com/">Express</a>,
+                <a href="https://hapijs.com/">hapi</a>
+              </small>
+            </li>
+            <li>
+              Python
+              <small>
+                <a href="https://www.djangoproject.com/">Django</a>,
+                <a href="http://flask.pocoo.org/">Flash</a>
+              </small>
+            </li>
+            <li>
+              Scala
+              <small>
+                <a href="https://akka.io/">Akka</a>,
+                <a href="https://www.playframework.com/">Play</a>
+              </small>
+            </li>
+          </ul>
+          <aside class="notes">
+            used different projects; level of my experience and skill varies in them
+          </aside>
+        </section>
+        <section>
+          <h3>Why Elixir?</h3>
+          <ul>
+            <li>
+              Good balance between safety and flexibility
+              <br />
+              <small>strong &amp; dynamic typing</small>
+            </li>
+            <li>
+              Control flow and error handling at higher level
+              <br />
+              <small>supervision tree and process messaging</small>
+            </li>
+            <li>
+              Pattern matching and less control logic
+              <br />
+              <small>hard to write "bad" code</small>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <h3>Adoption</h3>
+          <ul>
+            <li>Use Elixir for all new services</li>
+            <li>Plan to migrate existing services along with archtecture changes</li>
+          </ul>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h2>
+            Elixir
+            <br />
+            <small>from Ruby developer</small>
+          </h2>
+        </section>
+        <section>
+          <h3>
+            Elixir:
+            <br />
+            <small>as a functional programming language</small>
+          </h3>
+          <ul>
+            <li>Immutability</li>
+            <li>
+              <a href="https://elixir-lang.org/getting-started/pattern-matching.html">Pattern Matching</a>
+            </li>
+            <li>Recursion</li>
+            <li>
+              <a href="https://hexdocs.pm/elixir/1.6.5/List.html">
+                <code>List</code>
+              </a>
+              , not
+              <a href="https://ruby-doc.org/core-2.5.1/Array.html">
+                <code>Array</code>
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <h3>Elixir: Good</h3>
+          <ul>
+            <li>
+              <a href="https://hexdocs.pm/mix/1.6.5/Mix.Tasks.Format.html">
+                <code>mix format</code>
+              </a>
+            </li>
+            <li>
+              <a href="http://erlang.org/doc/man/dialyzer.html">dialyzer</a>: static code analysis without false postive
+              <br/>
+              <small>automatic and incremental check with
+                <a href="https://github.com/JakeBecker/elixir-ls">ElixirLS</a>
+              </small>
+            </li>
+            <li>
+              <a href="https://github.com/elixir-lang/ex_doc">ExDoc</a>: docs with auto-linking
+            </li>
+            <li>
+              <a href="https://hexdocs.pm/">hexdocs</a>: online docs
+              <br />
+              <small>
+                instant search with
+                <a href="https://kapeli.com/dash">Dash</a> +
+                <a href="https://www.alfredapp.com/">Alfred</a>
+              </small>
+            </li>
+            <li>
+              Active and thoughtful development of Elixir
+              <small>
+                close collaboration with Erlang, version and deprecation policy
+              </small>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <h3>
+            Elixir:
+            <s>Bad</s>
+            <ins>Different</ins>
+          </h3>
+          <ul>
+            <li>
+              Rebind (reassignment) by default
+              <br />
+              <small>different from erlang, scala</small>
+            </li>
+            <li>
+              dialyzer does not catch all errors
+              <br />
+              <small>use more options for over/under spec, ...</small>
+            </li>
+            <li>
+              Manipulatnig deep nested structure
+              <br />
+              <small>
+                <a href="https://hexdocs.pm/elixir/1.6.5/Kernel.html#get_and_update_in/3">
+                  <code>Kernel.get_and_update_in/3</code>
+                </a>
+              </small>
+            </li>
+            <li>
+              Many ways to store configuration
+              <br/>
+              <small>
+                <a href="https://hexdocs.pm/elixir/1.6.5/Application.html#get_env/1">
+                  <code>Application.get_env/3</code>
+                </a>
+                ,
+                <a href="https://hexdocs.pm/elixir/1.6.5/System.html#get_env/1">
+                  <code>System.get_env/3</code>
+                </a>
+                ,
+                <a href="https://hexdocs.pm/elixir/1.6.5/GenServer.html">
+                  <code>GenServer</code>
+                </a>
+                ,
+                <a href="http://erlang.org/doc/man/ets.html">
+                  <code>:ets</code>
+                </a>
+              </small>
+            </li>
+          </ul>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h2>Onboarding</h2>
+        </section>
+        <section>
+          <h3>Dev Setup</h3>
+          <ul>
+            <li>
+              Elixir/Erlang:
+              <a href="https://github.com/asdf-vm/asdf">asdf</a>,
+              <a href="https://brew.sh/">Homebrew</a>
+            </li>
+            <li>
+              Editor:
+              <a href="https://code.visualstudio.com/">VisualStudio Code</a> +
+              <a href="https://github.com/JakeBecker/vscode-elixir-ls">ElixirLS extension</a>
+            </li>
+            <li>
+              Doc:
+              <a href="https://kapeli.com/dash">Dash</a> +
+              <a href="https://www.alfredapp.com/">Alfred</a>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <h3>Tips</h3>
+          <ul>
+            <li>
+              Check out the official Elixir doc at
+              <a href="https://hexdocs.pm/elixir/">hexdoc/elixir</a>
+            </li>
+            <li>
+              Keep getting your hands dirty
+              <br />
+              <small>
+                <a href="https://www.codewars.com/">codewars</a>,
+                <a href="http://exercism.io/">exercism</a>, ...
+              </small>
+            </li>
+            <li>
+              Start with working code then refactor it into "Elixir" way
+              <br />
+              <small>control flow, configuration, process, supervision tree, ...</small>
+            </li>
+          </ul>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h2>Deployment</h2>
+        </section>
+        <section>
+          <h3>Deployment: What I've done</h3>
+          <ul>
+            <li>
+              Started with
+              <a href="https://github.com/bitwalker/distillery">distillery</a> in docker
+              <small>
+                build and run a release in docker container
+              </small>
+            </li>
+            <li>
+              Found no real benefits of
+              <a href="http://erlang.org/doc/design_principles/release_structure.html">release</a>
+              <em>for us</em>
+            </li>
+            <li>
+              Now uses
+              <code>mix run</code> in docker</li>
+          </ul>
+        </section>
+        <section>
+          <h3>
+            <code>Dockerfile</code> Excerpt
+          </h3>
+          <pre><code class="docker">
+RUN mkdir -p apps/app_1 apps/app_2
+COPY mix.exs mix.lock ./
+COPY apps/app_1/mix.exs apps/app_1/
+COPY apps/app_2/mix.exs apps/app_2/
+RUN mix deps.get \
+    && mix deps.compile \
+    && MIX_ENV=test mix deps.compile
+COPY . .
+RUN mix compile \
+    && MIX_ENV=test mix compile \
+    && mix phx.digest
+
+CMD ["mix", "run", "--no-halt"]
+          </code></pre>
+        </section>
+        <section>
+          <h3>
+            <code>docker-compose.yml</code> for Testing
+          </h3>
+          <pre><code data-trim  class="yaml">
+version: '3'
+
+services:
+  sut: # system under test
+    image: ${IMAGE}
+    depends_on:
+      - postgres
+    environment:
+      - MIX_ENV=test
+      - DATABASE_URL=ecto://postgres:postgres@postgres/foo_dev?pool_size=5
+    command: mix test
+
+  postgres:
+    image: postgres:10.1-alpine
+          </code></pre>
+          <p>
+            <code>docker-compose run sut</code>
+          </p>
+        </section>
+        <section>
+          <h3>Deployment: Notes</h3>
+          <ul>
+            <li>
+              Elixir will have better Erlang release support
+              <small>
+                <a href="https://dockyard.com/blog/2018/02/28/elixir-deployment-tools-update-february-2018">Elixir Deployment Tools Update - February 2018</a>
+              </small>
+            </li>
+            <li>Running in Kubernetes</li>
+            <li>
+              <a href="http://erlang.org/doc/reference_manual/distributed.html">Distrubted Erlang</a>
+            </li>
+            <li>
+              <a href="http://erlang.org/doc/reference_manual/code_loading.html">Code Replacement</a>
+            </li>
+          </ul>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h2>Umbrella Project</h2>
+          <p>multiple applications in one repository</p>
+        </section>
+        <section>
+          <h3>Umbrella: What I've done</h3>
+          <ul>
+            <li>multiple repos per app &rarr; one umbrella</li>
+            <li>one large app &rarr; one umbrella with multiple apps</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Umbrella: Good</h3>
+          <ul>
+            <li>
+              All advantages of
+              <strong>monorepo</strong>
+              <ul>
+                <li>Making cross-application changes easily</li>
+                <li>Sharing dependencies</li>
+              </ul>
+            </li>
+            <li>Nothing magical
+              <ul>
+                <li>Testing applications independently</li>
+                <li>Easy switching between umbrella &harr; non-umbrella</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <h3>Umbrella: Challenges</h3>
+          <ul>
+            <li>
+              Dependency conflicts
+              <br />
+              <small>version lock across all applications</small>
+            </li>
+            <li>When to (or not to) use umbrella?</li>
+          </ul>
+        </section>
+      </section>
+      <section>
+        <h2>Q &amp; A</h2>
+      </section>
+    </div>
+  </div>
+
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+
+  <script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+      history: true,
+      slideNumber: true,
+      dependencies: [
+        { src: 'plugin/markdown/marked.js' },
+        { src: 'plugin/markdown/markdown.js' },
+        { src: 'plugin/notes/notes.js', async: true },
+        { src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+      ]
+    });
+  </script>
+</body>
+
+</html>
